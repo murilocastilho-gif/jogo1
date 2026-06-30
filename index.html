@@ -7,124 +7,227 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Animações e Efeitos Visuais */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
         .animate-shake {
-            animation: shake 0.5s ease-in-out;
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        /* Efeito de brilho de fundo */
+        .glow-indigo {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4);
+        }
+        .glow-red {
+            box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.4);
+        }
+        .glow-purple {
+            box-shadow: 0 0 40px -10px rgba(168, 85, 247, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-500/30 selection:text-purple-200">
 
-    <!-- TELA INICIAL -->
-    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4">
-        <div class="max-w-2xl w-full text-center space-y-8 bg-slate-800 p-8 md:p-10 rounded-2xl shadow-2xl border border-slate-700">
-            <div class="flex justify-center space-x-4 mb-4">
-                <span class="text-6xl animate-bounce" role="img" aria-label="java">☕</span>
-                <span class="text-6xl font-bold text-slate-400">VS</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 0.2s" role="img" aria-label="kotlin">🚀</span>
+    <!-- TELA INICIAL (Ecrã de Boas-vindas) -->
+    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <!-- Efeitos de Luz no Fundo -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-2xl w-full text-center space-y-8 bg-slate-900/80 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-2xl border border-slate-800/80 relative z-10">
+            <div class="flex justify-center items-center space-x-6 mb-2">
+                <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl glow-indigo">
+                    <span class="text-6xl block transform hover:scale-110 transition-transform cursor-default" role="img" aria-label="java">☕</span>
+                </div>
+                <span class="text-3xl font-black text-slate-500 italic">VS</span>
+                <div class="p-4 bg-purple-500/10 border border-purple-500/30 rounded-2xl glow-purple">
+                    <span class="text-6xl block transform hover:scale-110 transition-transform cursor-default" role="img" aria-label="kotlin">🚀</span>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500">
-                Jornada do Código
-            </h1>
-            <p class="text-xl text-slate-300">
-                Aprenda as diferenças entre Java e Kotlin enquanto enfrenta os terríveis monstros do código legado!
-            </p>
-            <div class="bg-slate-900 p-6 rounded-lg text-left text-sm md:text-base text-slate-400 border border-slate-800">
-                <h3 class="font-bold text-slate-200 mb-2">Como jogar:</h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>Leia atentamente a explicação teórica de cada nível.</li>
-                    <li>Responda ao desafio corretamente para atacar o bug.</li>
-                    <li>Você tem 3 pontos de vida. Cuidado para não errar!</li>
+            
+            <div class="space-y-3">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-indigo-400 to-purple-500">
+                    Jornada do Código
+                </h1>
+                <p class="text-lg md:text-xl text-slate-400 max-w-lg mx-auto">
+                    Enfrente os bugs do sistema legado! Domine os fundamentos do Java tradicional e descubra o poder moderno do Kotlin.
+                </p>
+            </div>
+
+            <div class="bg-slate-950/60 p-6 rounded-2xl text-left text-sm md:text-base text-slate-400 border border-slate-800/60 space-y-3">
+                <h3 class="font-bold text-slate-200 flex items-center gap-2">
+                    <span class="text-indigo-400">🎮</span> Regras da Aventura:
+                </h3>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-500 mt-1">⚡</span>
+                        <span><strong>Níveis 1 a 6:</strong> Domínio e conceitos essenciais de <strong>Java</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-purple-500 mt-1">⚡</span>
+                        <span><strong>Níveis 7 e 8:</strong> Modernização e robustez com <strong>Kotlin</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-500 mt-1">❤️</span>
+                        <span>Inicia com <strong>3 pontos de vida</strong>. Erros custam corações!</span>
+                    </li>
                 </ul>
             </div>
+
             <button 
                 onclick="startGame()"
-                class="w-full py-4 text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-500/30"
+                class="w-full py-4 text-lg font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 rounded-2xl transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-purple-500/25 border border-purple-400/20"
             >
                 Iniciar Aventura
             </button>
         </div>
     </div>
 
-    <!-- TELA DE JOGO -->
-    <div id="game-screen" class="hidden min-h-screen flex flex-col">
-        <!-- Topbar: Vida e Progresso -->
-        <header class="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center shadow-md">
-            <!-- Corações/Vidas -->
-            <div id="hearts-container" class="flex space-x-1">
-                <!-- Inserido via JS -->
+    <!-- TELA DE JOGO (Ecrã Principal) -->
+    <div id="game-screen" class="hidden min-h-screen flex flex-col justify-between">
+        <!-- Topbar / Cabeçalho -->
+        <header class="bg-slate-900/90 backdrop-blur-md px-6 py-4 border-b border-slate-800/80 flex justify-between items-center shadow-lg sticky top-0 z-50">
+            <!-- Vidas (Corações) -->
+            <div class="flex items-center gap-3 bg-slate-950/50 px-4 py-2 rounded-2xl border border-slate-800">
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">HP:</span>
+                <div id="hearts-container" class="flex space-x-1.5">
+                    <!-- Gerado dinamicamente -->
+                </div>
             </div>
-            <div id="level-indicator" class="text-lg font-bold text-slate-300">
-                Nível 1 / 5
+            
+            <!-- Indicador do Nível -->
+            <div class="bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-2xl">
+                <span id="level-indicator" class="text-sm font-bold text-indigo-400 tracking-wide font-mono">
+                    NÍVEL 1 / 8
+                </span>
             </div>
         </header>
 
         <!-- Área Principal de Batalha -->
-        <main class="flex-grow flex flex-col lg:flex-row p-4 md:p-8 gap-8 max-w-6xl mx-auto w-full">
+        <main class="flex-grow flex flex-col lg:flex-row p-4 md:p-8 gap-8 max-w-7xl mx-auto w-full items-stretch">
             
-            <!-- Lado Esquerdo: Arena de Batalha & Teoria -->
-            <div class="flex-1 flex flex-col gap-6">
+            <!-- Lado Esquerdo: Arena & Tomo do Conhecimento -->
+            <div class="flex-1 flex flex-col gap-6 lg:max-w-[50%]">
                 
-                <!-- Arena Visual -->
-                <div id="arena" class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-lg flex justify-between items-center relative overflow-hidden h-48">
-                    <!-- Fundo Decorativo -->
-                    <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+                <!-- Arena de Combate Visual -->
+                <div id="arena" class="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl flex flex-col justify-between relative overflow-hidden h-60 glow-indigo">
+                    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 16px 16px;"></div>
                     
-                    <!-- Jogador -->
-                    <div id="player-character" class="flex flex-col items-center z-10 transition-transform duration-200">
-                        <div class="text-6xl bg-indigo-900/50 p-4 rounded-full border-2 border-indigo-500 mb-2">🧑‍💻</div>
-                        <span class="font-bold text-indigo-400">Você (Dev)</span>
-                    </div>
-
-                    <!-- Divisor VS -->
-                    <div class="text-2xl font-black text-slate-600 italic z-10">VS</div>
-
-                    <!-- Inimigo -->
-                    <div id="enemy-character" class="flex flex-col items-center z-10 transition-all duration-300">
-                        <div id="enemy-emoji" class="text-6xl bg-red-900/50 p-4 rounded-full border-2 border-red-500 mb-2 animate-bounce">
-                            🦠
+                    <!-- Topo da Arena (Barras de Vida e Título) -->
+                    <div class="flex justify-between items-center w-full z-10">
+                        <!-- Vida do Jogador -->
+                        <div class="text-left space-y-1">
+                            <span class="text-xs font-bold text-indigo-400 uppercase">Dev (Você)</span>
+                            <div class="w-24 md:w-32 bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                                <div id="player-hp-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-full transition-all duration-500"></div>
+                            </div>
                         </div>
-                        <span id="enemy-name" class="font-bold text-red-400">Slime do Console</span>
+
+                        <!-- Status do Combate -->
+                        <span class="text-xs font-black px-2.5 py-1 bg-slate-950 text-slate-500 rounded-full border border-slate-800">VS</span>
+
+                        <!-- Vida do Inimigo -->
+                        <div class="text-right space-y-1">
+                            <span id="enemy-name-hud" class="text-xs font-bold text-red-400 uppercase">Bug</span>
+                            <div class="w-24 md:w-32 bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800 ml-auto">
+                                <div id="enemy-hp-bar" class="bg-gradient-to-r from-red-500 to-pink-500 h-full w-full transition-all duration-500"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Overlay de Dano/Acerto -->
+                    <!-- Corpo da Arena (Personagens) -->
+                    <div class="flex justify-between items-center px-4 md:px-12 z-10 flex-grow mt-2">
+                        <!-- Avatar Jogador -->
+                        <div id="player-character" class="flex flex-col items-center transition-transform duration-200">
+                            <div class="text-5xl md:text-6xl bg-slate-950 p-4 rounded-2xl border border-indigo-500/30 shadow-lg relative">
+                                🧑‍💻
+                                <span class="absolute -bottom-1 -right-1 bg-indigo-500 w-3 h-3 rounded-full animate-ping"></span>
+                            </div>
+                        </div>
+
+                        <!-- Efeitos Visuais Centrais -->
+                        <div id="combat-effect" class="text-4xl opacity-0 transition-all duration-300 transform scale-50">⚡</div>
+
+                        <!-- Avatar Inimigo -->
+                        <div id="enemy-character" class="flex flex-col items-center transition-all duration-300">
+                            <div id="enemy-emoji" class="text-5xl md:text-6xl bg-slate-950 p-4 rounded-2xl border border-red-500/30 shadow-lg animate-bounce" style="animation-duration: 2s;">
+                                🦠
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nome Completo do Inimigo no Rodapé da Arena -->
+                    <div class="text-center w-full z-10 mt-2">
+                        <span id="enemy-name" class="text-sm font-semibold text-slate-400">Loading...</span>
+                    </div>
+
+                    <!-- Overlay para impacto visual de Dano/Sucesso -->
                     <div id="damage-overlay" class="absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0"></div>
                 </div>
 
-                <!-- Painel de Explicação Teórica -->
-                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700 flex-grow shadow-lg">
-                    <h2 class="text-2xl font-bold mb-4 text-purple-400 flex items-center gap-2">
-                        <span>📖</span> Tomo do Conhecimento
-                    </h2>
-                    <div id="tome-content" class="text-lg text-slate-300 leading-relaxed space-y-4">
-                        <!-- Inserido dinamicamente via JS -->
+                <!-- Painel de Explicação Teórica (Tomo) -->
+                <div class="bg-slate-900/60 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-800 shadow-xl flex flex-col justify-between flex-grow">
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 text-indigo-400 flex items-center gap-2">
+                            <span class="p-1.5 bg-indigo-500/10 rounded-lg">📖</span> Tomo do Conhecimento
+                        </h2>
+                        <!-- Scroll containment para explicações mais longas se necessário -->
+                        <div id="tome-content" class="text-base md:text-lg text-slate-300 leading-relaxed space-y-4 max-h-[220px] overflow-y-auto pr-2">
+                            <!-- Inserido dinamicamente via JS -->
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Lado Direito: O Desafio (Quiz) -->
-            <div class="flex-1 flex flex-col">
-                <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg h-full flex flex-col justify-between">
+            <div class="flex-grow flex-1 flex flex-col">
+                <div class="bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-xl h-full flex flex-col justify-between">
                     <div>
-                        <h2 id="challenge-title" class="text-xl font-bold text-slate-400 mb-2 uppercase tracking-wider text-sm">
+                        <span class="text-xs font-bold text-purple-400 uppercase tracking-widest bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full">
                             Desafio Ativo
+                        </span>
+                        <h2 id="challenge-title" class="text-xl font-extrabold text-slate-200 mt-4 mb-2">
+                            Título da Pergunta
                         </h2>
-                        <p id="challenge-question" class="text-xl font-medium text-slate-100 mb-8 leading-snug">
+                        <p id="challenge-question" class="text-base md:text-lg font-medium text-slate-400 mb-6 leading-relaxed">
                             Pergunta de teste?
                         </p>
                     </div>
 
                     <!-- Alternativas de Resposta -->
-                    <div id="options-container" class="space-y-4 my-auto">
+                    <div id="options-container" class="space-y-3.5 my-auto">
                         <!-- Botões inseridos dinamicamente -->
                     </div>
 
                     <!-- Mensagem de Feedback Inferior -->
-                    <div id="feedback-message" class="mt-6 h-12 flex items-center justify-center text-lg font-bold rounded-lg transition-all">
+                    <div id="feedback-message" class="mt-6 h-12 flex items-center justify-center text-base md:text-lg font-bold rounded-2xl transition-all">
                         <!-- Correto/Incorreto dinâmico -->
                     </div>
                 </div>
@@ -134,104 +237,159 @@
     </div>
 
     <!-- TELA FINAL (Vitória ou Derrota) -->
-    <div id="end-screen" class="hidden min-h-screen flex items-center justify-center p-4">
-        <div class="max-w-lg w-full text-center space-y-8 bg-slate-800 p-10 rounded-2xl shadow-2xl border border-slate-700">
-            <div id="end-emoji" class="text-8xl mb-4">
+    <div id="end-screen" class="hidden min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-radial-gradient from-purple-900/10 to-transparent pointer-events-none"></div>
+        <div class="max-w-md w-full text-center space-y-8 bg-slate-900/90 backdrop-blur-md p-10 rounded-3xl shadow-2xl border border-slate-800 relative z-10">
+            <div id="end-emoji" class="text-8xl transform hover:rotate-12 transition-transform duration-300 cursor-default">
                 🏆
             </div>
-            <h1 id="end-title" class="text-4xl font-extrabold text-green-400">
-                Você Venceu!
-            </h1>
-            <p id="end-desc" class="text-xl text-slate-300">
-                Parabéns! Você dominou os fundamentos de Kotlin e modernizou a base de código!
-            </p>
+            <div class="space-y-2">
+                <h1 id="end-title" class="text-3xl md:text-4xl font-black text-emerald-400 tracking-tight">
+                    Você Venceu!
+                </h1>
+                <p id="end-desc" class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    Parabéns! Dominou perfeitamente as bases de Kotlin, derrotando com sucesso todo o legado do sistema!
+                </p>
+            </div>
             <button 
                 onclick="startGame()"
-                class="w-full py-4 text-xl font-bold bg-slate-700 hover:bg-slate-600 rounded-xl transition-all"
+                class="w-full py-4 text-lg font-bold text-white bg-slate-800 hover:bg-slate-700 rounded-2xl transition-all border border-slate-700 shadow-md transform hover:scale-[1.01] active:scale-[0.99]"
             >
                 Jogar Novamente
             </button>
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Lógica e Fluxo do Jogo -->
+    <!-- Rodapé Minimalista -->
+    <footer class="bg-slate-950/80 text-center py-4 text-xs text-slate-600 border-t border-slate-900">
+        Jornada do Código © 2026 — Desenvolvido com foco em Educação Tecnológica.
+    </footer>
+
+    <!-- JAVASCRIPT: Lógica, Fluxo e Conteúdo do Jogo -->
     <script>
-        // --- Dados dos Níveis ---
+        // --- Dados dos Níveis (6 de Java e 2 de Kotlin) ---
         const LEVELS = [
+            // --- QUESTÕES DE JAVA (1 a 6) ---
             {
                 id: 1,
-                title: "O Despertar do Hello World",
-                enemyName: "Slime do Console",
-                enemyEmoji: "🦠",
-                explanation: "Em Java, para imprimir algo no ecrã, é necessário utilizar uma instrução longa: `System.out.println(\"Olá\");`. O Kotlin foi desenhado para ser mais conciso, removendo a necessidade de código repetitivo (boilerplate). Em Kotlin, basta utilizar `println(\"Olá\")`.",
-                question: "Como imprime a frase 'Batalha Iniciada' no console usando Kotlin?",
+                title: "JAVA: A Árvore da Herança",
+                enemyName: "Fantasma do Polimorfismo",
+                enemyEmoji: "👻",
+                explanation: "Em Java, a orientação a objetos permite que uma classe herde atributos e comportamentos de outra através do uso da palavra-chave `extends`. Vale lembrar que o Java não suporta herança múltipla de classes (uma classe herdar de duas classes diretamente), mas contorna isso permitindo herdar múltiplos contratos com `implements`.",
+                question: "Qual palavra-chave é usada em Java para herdar de uma classe e qual é usada para assinar uma interface, respectivamente?",
                 options: [
-                    "System.out.println(\"Batalha Iniciada\");",
-                    "Console.log(\"Batalha Iniciada\");",
-                    "println(\"Batalha Iniciada\")",
-                    "echo(\"Batalha Iniciada\")"
-                ],
-                correctAnswer: 2
-            },
-            {
-                id: 2,
-                title: "O Guardião da Mutabilidade",
-                enemyName: "Golem de Variáveis",
-                enemyEmoji: "🗿",
-                explanation: "Em Java, deve declarar o tipo da variável: `int x = 10;`. O Kotlin possui *inferência de tipo*, ou seja, ele descobre o tipo sozinho. Além disso, Kotlin foca na segurança utilizando `val` para variáveis imutáveis (que não mudam, equivalente ao `final` do Java) e `var` para variáveis mutáveis.",
-                question: "Qual é a forma correta de criar uma variável INALTERÁVEL (imutável) contendo o número 5 em Kotlin?",
-                options: [
-                    "var x = 5",
-                    "val x = 5",
-                    "const int x = 5",
-                    "final x = 5"
+                    "inherits e implements",
+                    "extends e implements",
+                    "implements e extends",
+                    "extends e interface"
                 ],
                 correctAnswer: 1
             },
             {
-                id: 3,
-                title: "O Temido NullPointerException",
-                enemyName: "Fantasma do Null",
-                enemyEmoji: "👻",
-                explanation: "O 'Billion Dollar Mistake' (Erro de um bilhão de dólares) é o famoso NullPointerException do Java. No Kotlin, a segurança contra nulos (Null Safety) está no sistema de tipos. Uma variável `String` normal não pode receber `null`. Para permitir que ela seja nula, deve adicionar um `?` ao tipo.",
-                question: "Como declara uma variável chamada 'nome' que pode receber um valor de texto OU nulo em Kotlin?",
+                id: 2,
+                title: "JAVA: O Labirinto dos Primitivos",
+                enemyName: "Golem de Autoboxing",
+                enemyEmoji: "🤖",
+                explanation: "Java separa tipos primitivos de dados (como `int`, `double`, `boolean`) de suas representações como objetos empacotadores, chamados de Wrappers (`Integer`, `Double`, `Boolean`). O compilador realiza automaticamente a conversão entre eles, um recurso conhecido como Autoboxing (de primitivo para objeto) e Unboxing (de objeto para primitivo).",
+                question: "Qual das seguintes opções representa uma conversão válida com Autoboxing implícito de um tipo primitivo para o seu Wrapper em Java?",
                 options: [
-                    "String? nome = null",
-                    "var nome: String? = null",
-                    "Nullable<String> nome = null",
-                    "var nome: String = null"
+                    "int x = 5; Integer y = x;",
+                    "Integer x = 5; int y = null;",
+                    "int x = null; Integer y = 5;",
+                    "primitive int x = 5; Wrapper Integer y = 5;"
+                ],
+                correctAnswer: 0
+            },
+            {
+                id: 3,
+                title: "JAVA: Coleta Automática de Lixo",
+                enemyName: "Vapor de Memória Alocada",
+                enemyEmoji: "💨",
+                explanation: "Ao contrário de linguagens como C e C++, o programador Java não precisa de eliminar variáveis e objetos da memória manualmente. O ambiente de execução Java (JVM) conta com o Garbage Collector (Coletor de Lixo), que corre em segundo plano eliminando objetos que perderam todas as referências ativas.",
+                question: "Como funciona a chamada de System.gc() no ecossistema do Java?",
+                options: [
+                    "Ela elimina imediatamente todos os objetos da JVM e desliga o programa.",
+                    "Ela solicita à JVM que corra o Garbage Collector, mas funciona apenas como uma sugestão/requisição, sem garantia de execução imediata.",
+                    "Ela funciona exatamente como o comando 'free()' do C, limpando a memória imediatamente de forma síncrona.",
+                    "Ela remove exclusivamente objetos protegidos e ficheiros do sistema operativo."
                 ],
                 correctAnswer: 1
             },
             {
                 id: 4,
-                title: "A Fera do Boilerplate",
-                enemyName: "Monstro de Getters/Setters",
-                enemyEmoji: "🐉",
-                explanation: "Em Java, se quiser criar uma classe simples para guardar dados (como um 'Usuario' com nome e idade), precisa de escrever construtores, getters, setters, equals(), hashCode() e toString(). No Kotlin, existe uma funcionalidade mágica que gera tudo isso nos bastidores: as 'Data Classes'.",
-                question: "Qual palavra-chave usamos no Kotlin para criar uma classe de dados que já vem com todas essas funções prontas?",
+                title: "JAVA: O Vetor Dinâmico",
+                enemyName: "Serpente ArrayOutOfBounds",
+                enemyEmoji: "🐍",
+                explanation: "Arrays tradicionais em Java têm tamanho fixo definido na sua criação (ex: `int[] array = new int[5]`). Para criar listas que podem expandir e reduzir de tamanho dinamicamente conforme novos elementos são adicionados, o Java fornece a classe utilitária `ArrayList`.",
+                question: "Quais métodos da estrutura ArrayList são utilizados para adicionar um elemento e retornar a quantidade de elementos na lista, respectivamente?",
                 options: [
-                    "record class",
-                    "model class",
-                    "struct",
-                    "data class"
+                    "push() e length()",
+                    "add() e size()",
+                    "insert() e capacity()",
+                    "append() e count()"
                 ],
-                correctAnswer: 3
+                correctAnswer: 1
             },
             {
                 id: 5,
-                title: "O Desafio Final do Ponto e Vírgula",
-                enemyName: "Mestre Sintaxe",
-                enemyEmoji: "🧙‍♂️",
-                explanation: "Por décadas, programadores Java sofreram ao esquecer um simples ponto e vírgula (;) no final da linha, resultando em erros de compilação irritantes. O Kotlin é uma linguagem moderna e tomou uma decisão libertadora em relação a isso.",
-                question: "O que acontece se você não colocar um ponto e vírgula (;) no final de uma instrução em Kotlin?",
+                title: "JAVA: Proteção contra Exceções",
+                enemyName: "Feiticeiro do RuntimeException",
+                enemyEmoji: "🧙",
+                explanation: "Para evitar que falhas encerrem a aplicação, o Java usa o bloco `try-catch`. Opcionalmente, podemos declarar o bloco `finally`. Este bloco especial é executado sempre, garantindo a libertação de recursos críticos (como fechar conexões ou ficheiros) ocorrendo um erro ou não.",
+                question: "Qual das seguintes afirmações sobre o bloco 'finally' em Java é correta?",
                 options: [
-                    "O código não compila e gera um Syntax Error.",
-                    "O código entra em loop infinito.",
-                    "O código compila e funciona perfeitamente, pois o ; é opcional.",
-                    "O Kotlin avisa que é uma má prática, mas executa."
+                    "Ele só executa se o bloco try falhar e lançar uma Exception.",
+                    "Ele só executa se o bloco try for finalizado com sucesso.",
+                    "Ele sempre será executado, inclusive se houver um comando 'return' dentro do try ou do catch.",
+                    "Ele serve apenas para substituir a necessidade de declarar blocos catch."
                 ],
                 correctAnswer: 2
+            },
+            {
+                id: 6,
+                title: "JAVA: Encapsulamento de Atributos",
+                enemyName: "Guardião de Acesso",
+                enemyEmoji: "🛡️",
+                explanation: "Os modificadores de acesso do Java ajudam a proteger as propriedades de uma classe. Os quatro níveis principais de visibilidade são: `public` (qualquer classe acede), `protected` (acedido por pacotes ou herança), `default/package-private` (acedido pelo mesmo pacote) e `private` (exclusivo para a própria classe).",
+                question: "Para manter o princípio de encapsulamento, qual modificador de acesso é o mais recomendado para declarar os atributos de uma classe que devem ser acedidos apenas via Getters e Setters?",
+                options: [
+                    "public",
+                    "protected",
+                    "private",
+                    "default"
+                ],
+                correctAnswer: 2
+            },
+            // --- QUESTÕES DE KOTLIN (7 e 8) ---
+            {
+                id: 7,
+                title: "KOTLIN: A Fera do Boilerplate",
+                enemyName: "Monstro de Getters/Setters",
+                enemyEmoji: "🐉",
+                explanation: "Em Java, para criar classes que apenas guardam dados, escreve-se muito código repetitivo: construtores, getters, setters, `equals()`, `hashCode()` e `toString()`. No Kotlin, o compilador resolve isso gerando todos esses métodos automaticamente a partir de uma classe prefixada com `data`.",
+                question: "Como declaramos uma classe de dados imutável com 'id' (inteiro) e 'nome' (texto) em uma única linha usando Kotlin?",
+                options: [
+                    "class Usuario(val id: Int, val nome: String)",
+                    "data class Usuario(val id: Int, val nome: String)",
+                    "struct Usuario(val id: Int, val nome: String)",
+                    "val class Usuario(id: Int, nome: String)"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 8,
+                title: "KOTLIN: Proteção Total contra Nulos",
+                enemyName: "Fantasma do Null",
+                enemyEmoji: "👻",
+                explanation: "Kotlin introduziu a segurança contra nulos (Null Safety) diretamente no seu sistema de tipos. Por padrão, uma variável não pode receber `null`. Para permitir valores nulos, adiciona-se o modificador `?` ao tipo, e pode-se usar o Operador Elvis (`?:`) para fornecer um valor substituto caso o objeto seja nulo.",
+                question: "Dada a variável 'val nome: String? = null', qual das alternativas abaixo usa o Operador Elvis corretamente para atribuir o valor de 'nome' ou 'Visitante' (se for nulo) a uma nova variável?",
+                options: [
+                    "val resultado = nome ?: \"Visitante\"",
+                    "val resultado = nome ? \"Visitante\"",
+                    "val resultado = nome != null ? nome : \"Visitante\"",
+                    "val resultado = nome.orElse(\"Visitante\")"
+                ],
+                correctAnswer: 0
             }
         ];
 
@@ -251,6 +409,10 @@
         const enemyCharacter = document.getElementById('enemy-character');
         const enemyEmoji = document.getElementById('enemy-emoji');
         const enemyName = document.getElementById('enemy-name');
+        const enemyNameHud = document.getElementById('enemy-name-hud');
+        const playerHpBar = document.getElementById('player-hp-bar');
+        const enemyHpBar = document.getElementById('enemy-hp-bar');
+        const combatEffect = document.getElementById('combat-effect');
         const damageOverlay = document.getElementById('damage-overlay');
         const tomeContent = document.getElementById('tome-content');
         
@@ -279,37 +441,40 @@
         function loadLevel() {
             feedbackActive = false;
             feedbackMessage.innerHTML = '';
+            combatEffect.className = "text-4xl opacity-0 transition-all duration-300 transform scale-50";
             
             const level = LEVELS[currentLevelIndex];
 
             // Atualiza indicadores e progresso
-            levelIndicator.textContent = `Nível ${currentLevelIndex + 1} / ${LEVELS.length}`;
+            levelIndicator.textContent = `NÍVEL ${currentLevelIndex + 1} / ${LEVELS.length}`;
             renderHearts();
+            updateHpBars();
 
             // Reseta inimigo visualmente
             enemyCharacter.style.opacity = '1';
             enemyCharacter.style.transform = 'scale(1)';
             enemyEmoji.textContent = level.enemyEmoji;
-            enemyName.textContent = level.enemyName;
+            enemyName.textContent = `${level.enemyName} (${level.title.split(':')[0]})`;
+            enemyNameHud.textContent = level.enemyName;
 
             // Formata a explicação (substitui os acentos graves por tags code)
             const formattedExplanation = formatExplanation(level.explanation);
             tomeContent.innerHTML = formattedExplanation;
 
             // Define perguntas
-            challengeTitle.textContent = `Desafio Ativo: ${level.title}`;
+            challengeTitle.textContent = `${level.title}`;
             challengeQuestion.textContent = level.question;
 
             // Renderiza Opções
             optionsContainer.innerHTML = '';
             level.options.forEach((option, index) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left p-4 rounded-xl border-2 border-slate-600 bg-slate-900 hover:bg-slate-700 hover:border-slate-400 text-slate-300 font-mono text-sm md:text-base transition-all duration-300 flex items-center gap-4 cursor-pointer hover:-translate-y-0.5 active:translate-y-0";
+                btn.className = "w-full text-left p-4 rounded-2xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 hover:border-slate-700 text-slate-300 font-mono text-sm md:text-base transition-all duration-300 flex items-center gap-4 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 shadow-sm shadow-slate-950/20";
                 btn.innerHTML = `
-                    <span class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-600 flex items-center justify-center font-bold font-sans flex-shrink-0">
+                    <span class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 flex items-center justify-center font-bold font-sans flex-shrink-0 text-indigo-400">
                         ${['A', 'B', 'C', 'D'][index]}
                     </span>
-                    <code>${escapeHTML(option)}</code>
+                    <code class="text-slate-200 select-all">${escapeHTML(option)}</code>
                 `;
                 btn.onclick = () => selectOption(index);
                 optionsContainer.appendChild(btn);
@@ -323,25 +488,32 @@
             const level = LEVELS[currentLevelIndex];
             const buttons = optionsContainer.querySelectorAll('button');
 
-            // Desativa todos os botões de opção
+            // Desativa todos os botões temporariamente durante a validação
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIndex === level.correctAnswer) {
-                // Sucesso
-                buttons[selectedIndex].className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-900/50 text-green-300 font-mono text-sm md:text-base flex items-center gap-4";
-                feedbackMessage.innerHTML = `<span class="text-green-400 animate-pulse">✓ Golpe Crítico! Bug destruído!</span>`;
+                // SUCESSO!
+                buttons[selectedIndex].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-950/40 text-emerald-300 font-mono text-sm md:text-base flex items-center gap-4 transition-all duration-300 shadow-md shadow-emerald-500/10";
+                feedbackMessage.innerHTML = `<span class="text-emerald-400 animate-pulse flex items-center gap-2">✨ Golpe Crítico! Bug destruído!</span>`;
                 
-                // Animação de dano no inimigo
-                damageOverlay.className = "absolute inset-0 bg-green-500/20 z-0 transition-none";
+                // Animação visual de ataque (Sucesso)
+                combatEffect.textContent = "💥";
+                combatEffect.className = "text-5xl opacity-100 transform scale-125 transition-all duration-300 animate-ping";
+                
+                // Reduz HP do inimigo visualmente no HUD
+                enemyHpBar.style.width = "0%";
+
+                // Animação de dano no inimigo (flash verde)
+                damageOverlay.className = "absolute inset-0 bg-emerald-500/10 z-0 transition-none";
                 setTimeout(() => {
                     damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0";
-                }, 100);
+                }, 150);
 
-                // Inimigo é derrotado e desaparece
+                // Inimigo encolhe e desaparece
                 setTimeout(() => {
                     enemyCharacter.style.opacity = '0';
                     enemyCharacter.style.transform = 'scale(0.5)';
-                }, 500);
+                }, 400);
 
                 // Avança de nível ou finaliza o jogo
                 setTimeout(() => {
@@ -351,21 +523,27 @@
                     } else {
                         endGame(true);
                     }
-                }, 2000);
+                }, 1800);
 
             } else {
-                // Erro
-                buttons[selectedIndex].className = "w-full text-left p-4 rounded-xl border-2 border-slate-800 bg-slate-900 text-slate-600 opacity-50 font-mono text-sm md:text-base flex items-center gap-4";
-                buttons[level.correctAnswer].className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-900/50 text-green-300 font-mono text-sm md:text-base flex items-center gap-4";
+                // ERRO!
+                // Destacar o botão clicado em vermelho
+                buttons[selectedIndex].className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-950/30 text-rose-300 font-mono text-sm md:text-base flex items-center gap-4 transition-all duration-300 cursor-not-allowed shadow-md shadow-rose-500/10";
+                buttons[selectedIndex].dataset.wrong = "true"; // Marca como incorreta permanente para o nível atual
                 
-                feedbackMessage.innerHTML = `<span class="text-red-400 animate-bounce">✗ Incorreto! O bug atacou as suas defesas!</span>`;
+                feedbackMessage.innerHTML = `<span class="text-rose-400 animate-bounce flex items-center gap-2">⚡ Incorreto! O bug atacou as suas defesas!</span>`;
                 
                 playerHealth--;
                 renderHearts();
+                updateHpBars();
 
-                // Animação de abalo no jogador
+                // Animação visual de ataque recebido
+                combatEffect.textContent = "☄️";
+                combatEffect.className = "text-4xl opacity-100 transform scale-110 transition-all duration-300";
+
+                // Animação de abalo do jogador (shake e flash vermelho)
                 playerCharacter.classList.add('animate-shake');
-                damageOverlay.className = "absolute inset-0 bg-red-500/20 z-0 transition-none";
+                damageOverlay.className = "absolute inset-0 bg-rose-500/20 z-0 transition-none";
                 setTimeout(() => {
                     playerCharacter.classList.remove('animate-shake');
                     damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0";
@@ -373,13 +551,18 @@
 
                 setTimeout(() => {
                     if (playerHealth <= 0) {
-                        endGame(false);
+                        // Revela a resposta correta no final do jogo (antes do Game Over)
+                        buttons[level.correctAnswer].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-950/40 text-emerald-300 font-mono text-sm md:text-base flex items-center gap-4 shadow-md";
+                        setTimeout(() => {
+                            endGame(false);
+                        }, 1500);
                     } else {
-                        // Deixa o jogador tentar novamente na mesma pergunta
+                        // Libera os outros botões (exceto o que o jogador acabou de errar)
                         feedbackActive = false;
                         feedbackMessage.innerHTML = '';
+                        combatEffect.className = "text-4xl opacity-0 transition-all duration-300 transform scale-50";
                         buttons.forEach((btn, index) => {
-                            if (index !== selectedIndex && index !== level.correctAnswer) {
+                            if (btn.dataset.wrong !== "true") {
                                 btn.disabled = false;
                             }
                         });
@@ -388,19 +571,37 @@
             }
         }
 
+        function updateHpBars() {
+            // Atualiza HP jogador
+            const playerHpPercent = (playerHealth / 3) * 100;
+            playerHpBar.style.width = `${playerHpPercent}%`;
+            
+            // Se HP estiver baixo (1 vida restante), muda a cor para vermelho
+            if (playerHealth === 1) {
+                playerHpBar.className = "bg-gradient-to-r from-rose-500 to-red-600 h-full w-full transition-all duration-500";
+            } else {
+                playerHpBar.className = "bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-full transition-all duration-500";
+            }
+
+            // Reseta HP inimigo para o nível atual
+            enemyHpBar.style.width = "100%";
+        }
+
         function endGame(isVictory) {
             gameScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
             if (isVictory) {
+                endScreen.className = "min-h-screen flex items-center justify-center p-4 relative overflow-hidden glow-purple";
                 endEmoji.textContent = '🏆';
                 endTitle.textContent = 'Você Venceu!';
-                endTitle.className = "text-4xl font-extrabold text-green-400";
+                endTitle.className = "text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300";
                 endDesc.textContent = 'Parabéns! Dominou perfeitamente as bases de Kotlin, derrotando com sucesso todo o legado do sistema!';
             } else {
+                endScreen.className = "min-h-screen flex items-center justify-center p-4 relative overflow-hidden glow-red";
                 endEmoji.textContent = '💀';
                 endTitle.textContent = 'Game Over';
-                endTitle.className = "text-4xl font-extrabold text-red-500";
+                endTitle.className = "text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-red-600";
                 endDesc.textContent = 'O código legado e os NullPointerExceptions superaram você. Que tal revisar a teoria e tentar novamente?';
             }
         }
@@ -411,7 +612,7 @@
             for (let i = 1; i <= 3; i++) {
                 const filled = i <= playerHealth;
                 heartsContainer.innerHTML += `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${filled ? '#ef4444' : 'none'}" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${filled ? '#f43f5e' : 'none'}" stroke="${filled ? '#f43f5e' : '#475569'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 transition-all duration-300 ${filled ? 'drop-shadow-[0_0_4px_rgba(244,63,94,0.5)]' : ''}">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
                 `;
@@ -421,7 +622,7 @@
         function formatExplanation(text) {
             return text.split('`').map((part, index) => {
                 if (index % 2 !== 0) {
-                    return `<code class="bg-slate-900 text-orange-400 px-2 py-1 rounded font-mono text-sm border border-slate-700">${escapeHTML(part)}</code>`;
+                    return `<code class="bg-slate-950 text-indigo-300 px-2.5 py-1 rounded-xl font-mono text-sm border border-slate-800 shadow-inner select-all">${escapeHTML(part)}</code>`;
                 }
                 return part;
             }).join('');
