@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada do Código: Java vs Kotlin</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- TELA INICIAL -->
+    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full text-center space-y-8 bg-slate-800 p-8 md:p-10 rounded-2xl shadow-2xl border border-slate-700">
+            <div class="flex justify-center space-x-4 mb-4">
+                <span class="text-6xl animate-bounce" role="img" aria-label="java">☕</span>
+                <span class="text-6xl font-bold text-slate-400">VS</span>
+                <span class="text-6xl animate-bounce" style="animation-delay: 0.2s" role="img" aria-label="kotlin">🚀</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500">
+                Jornada do Código
+            </h1>
+            <p class="text-xl text-slate-300">
+                Aprenda as diferenças entre Java e Kotlin enquanto enfrenta os terríveis monstros do código legado!
+            </p>
+            <div class="bg-slate-900 p-6 rounded-lg text-left text-sm md:text-base text-slate-400 border border-slate-800">
+                <h3 class="font-bold text-slate-200 mb-2">Como jogar:</h3>
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Leia atentamente a explicação teórica de cada nível.</li>
+                    <li>Responda ao desafio corretamente para atacar o bug.</li>
+                    <li>Você tem 3 pontos de vida. Cuidado para não errar!</li>
+                </ul>
+            </div>
+            <button 
+                onclick="startGame()"
+                class="w-full py-4 text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-500/30"
+            >
+                Iniciar Aventura
+            </button>
+        </div>
+    </div>
+
+    <!-- TELA DE JOGO -->
+    <div id="game-screen" class="hidden min-h-screen flex flex-col">
+        <!-- Topbar: Vida e Progresso -->
+        <header class="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center shadow-md">
+            <!-- Corações/Vidas -->
+            <div id="hearts-container" class="flex space-x-1">
+                <!-- Inserido via JS -->
+            </div>
+            <div id="level-indicator" class="text-lg font-bold text-slate-300">
+                Nível 1 / 5
+            </div>
+        </header>
+
+        <!-- Área Principal de Batalha -->
+        <main class="flex-grow flex flex-col lg:flex-row p-4 md:p-8 gap-8 max-w-6xl mx-auto w-full">
+            
+            <!-- Lado Esquerdo: Arena de Batalha & Teoria -->
+            <div class="flex-1 flex flex-col gap-6">
+                
+                <!-- Arena Visual -->
+                <div id="arena" class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-lg flex justify-between items-center relative overflow-hidden h-48">
+                    <!-- Fundo Decorativo -->
+                    <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+                    
+                    <!-- Jogador -->
+                    <div id="player-character" class="flex flex-col items-center z-10 transition-transform duration-200">
+                        <div class="text-6xl bg-indigo-900/50 p-4 rounded-full border-2 border-indigo-500 mb-2">🧑‍💻</div>
+                        <span class="font-bold text-indigo-400">Você (Dev)</span>
+                    </div>
+
+                    <!-- Divisor VS -->
+                    <div class="text-2xl font-black text-slate-600 italic z-10">VS</div>
+
+                    <!-- Inimigo -->
+                    <div id="enemy-character" class="flex flex-col items-center z-10 transition-all duration-300">
+                        <div id="enemy-emoji" class="text-6xl bg-red-900/50 p-4 rounded-full border-2 border-red-500 mb-2 animate-bounce">
+                            🦠
+                        </div>
+                        <span id="enemy-name" class="font-bold text-red-400">Slime do Console</span>
+                    </div>
+
+                    <!-- Overlay de Dano/Acerto -->
+                    <div id="damage-overlay" class="absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0"></div>
+                </div>
+
+                <!-- Painel de Explicação Teórica -->
+                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700 flex-grow shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4 text-purple-400 flex items-center gap-2">
+                        <span>📖</span> Tomo do Conhecimento
+                    </h2>
+                    <div id="tome-content" class="text-lg text-slate-300 leading-relaxed space-y-4">
+                        <!-- Inserido dinamicamente via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lado Direito: O Desafio (Quiz) -->
+            <div class="flex-1 flex flex-col">
+                <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg h-full flex flex-col justify-between">
+                    <div>
+                        <h2 id="challenge-title" class="text-xl font-bold text-slate-400 mb-2 uppercase tracking-wider text-sm">
+                            Desafio Ativo
+                        </h2>
+                        <p id="challenge-question" class="text-xl font-medium text-slate-100 mb-8 leading-snug">
+                            Pergunta de teste?
+                        </p>
+                    </div>
+
+                    <!-- Alternativas de Resposta -->
+                    <div id="options-container" class="space-y-4 my-auto">
+                        <!-- Botões inseridos dinamicamente -->
+                    </div>
+
+                    <!-- Mensagem de Feedback Inferior -->
+                    <div id="feedback-message" class="mt-6 h-12 flex items-center justify-center text-lg font-bold rounded-lg transition-all">
+                        <!-- Correto/Incorreto dinâmico -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- TELA FINAL (Vitória ou Derrota) -->
+    <div id="end-screen" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-lg w-full text-center space-y-8 bg-slate-800 p-10 rounded-2xl shadow-2xl border border-slate-700">
+            <div id="end-emoji" class="text-8xl mb-4">
+                🏆
+            </div>
+            <h1 id="end-title" class="text-4xl font-extrabold text-green-400">
+                Você Venceu!
+            </h1>
+            <p id="end-desc" class="text-xl text-slate-300">
+                Parabéns! Você dominou os fundamentos de Kotlin e modernizou a base de código!
+            </p>
+            <button 
+                onclick="startGame()"
+                class="w-full py-4 text-xl font-bold bg-slate-700 hover:bg-slate-600 rounded-xl transition-all"
+            >
+                Jogar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: Lógica e Fluxo do Jogo -->
+    <script>
+        // --- Dados dos Níveis ---
+        const LEVELS = [
+            {
+                id: 1,
+                title: "O Despertar do Hello World",
+                enemyName: "Slime do Console",
+                enemyEmoji: "🦠",
+                explanation: "Em Java, para imprimir algo no ecrã, é necessário utilizar uma instrução longa: `System.out.println(\"Olá\");`. O Kotlin foi desenhado para ser mais conciso, removendo a necessidade de código repetitivo (boilerplate). Em Kotlin, basta utilizar `println(\"Olá\")`.",
+                question: "Como imprime a frase 'Batalha Iniciada' no console usando Kotlin?",
+                options: [
+                    "System.out.println(\"Batalha Iniciada\");",
+                    "Console.log(\"Batalha Iniciada\");",
+                    "println(\"Batalha Iniciada\")",
+                    "echo(\"Batalha Iniciada\")"
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 2,
+                title: "O Guardião da Mutabilidade",
+                enemyName: "Golem de Variáveis",
+                enemyEmoji: "🗿",
+                explanation: "Em Java, deve declarar o tipo da variável: `int x = 10;`. O Kotlin possui *inferência de tipo*, ou seja, ele descobre o tipo sozinho. Além disso, Kotlin foca na segurança utilizando `val` para variáveis imutáveis (que não mudam, equivalente ao `final` do Java) e `var` para variáveis mutáveis.",
+                question: "Qual é a forma correta de criar uma variável INALTERÁVEL (imutável) contendo o número 5 em Kotlin?",
+                options: [
+                    "var x = 5",
+                    "val x = 5",
+                    "const int x = 5",
+                    "final x = 5"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 3,
+                title: "O Temido NullPointerException",
+                enemyName: "Fantasma do Null",
+                enemyEmoji: "👻",
+                explanation: "O 'Billion Dollar Mistake' (Erro de um bilhão de dólares) é o famoso NullPointerException do Java. No Kotlin, a segurança contra nulos (Null Safety) está no sistema de tipos. Uma variável `String` normal não pode receber `null`. Para permitir que ela seja nula, deve adicionar um `?` ao tipo.",
+                question: "Como declara uma variável chamada 'nome' que pode receber um valor de texto OU nulo em Kotlin?",
+                options: [
+                    "String? nome = null",
+                    "var nome: String? = null",
+                    "Nullable<String> nome = null",
+                    "var nome: String = null"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 4,
+                title: "A Fera do Boilerplate",
+                enemyName: "Monstro de Getters/Setters",
+                enemyEmoji: "🐉",
+                explanation: "Em Java, se quiser criar uma classe simples para guardar dados (como um 'Usuario' com nome e idade), precisa de escrever construtores, getters, setters, equals(), hashCode() e toString(). No Kotlin, existe uma funcionalidade mágica que gera tudo isso nos bastidores: as 'Data Classes'.",
+                question: "Qual palavra-chave usamos no Kotlin para criar uma classe de dados que já vem com todas essas funções prontas?",
+                options: [
+                    "record class",
+                    "model class",
+                    "struct",
+                    "data class"
+                ],
+                correctAnswer: 3
+            },
+            {
+                id: 5,
+                title: "O Desafio Final do Ponto e Vírgula",
+                enemyName: "Mestre Sintaxe",
+                enemyEmoji: "🧙‍♂️",
+                explanation: "Por décadas, programadores Java sofreram ao esquecer um simples ponto e vírgula (;) no final da linha, resultando em erros de compilação irritantes. O Kotlin é uma linguagem moderna e tomou uma decisão libertadora em relação a isso.",
+                question: "O que acontece se você não colocar um ponto e vírgula (;) no final de uma instrução em Kotlin?",
+                options: [
+                    "O código não compila e gera um Syntax Error.",
+                    "O código entra em loop infinito.",
+                    "O código compila e funciona perfeitamente, pois o ; é opcional.",
+                    "O Kotlin avisa que é uma má prática, mas executa."
+                ],
+                correctAnswer: 2
+            }
+        ];
+
+        // --- Estado do Jogo ---
+        let currentLevelIndex = 0;
+        let playerHealth = 3;
+        let feedbackActive = false;
+
+        // --- Elementos DOM ---
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+        
+        const heartsContainer = document.getElementById('hearts-container');
+        const levelIndicator = document.getElementById('level-indicator');
+        const playerCharacter = document.getElementById('player-character');
+        const enemyCharacter = document.getElementById('enemy-character');
+        const enemyEmoji = document.getElementById('enemy-emoji');
+        const enemyName = document.getElementById('enemy-name');
+        const damageOverlay = document.getElementById('damage-overlay');
+        const tomeContent = document.getElementById('tome-content');
+        
+        const challengeTitle = document.getElementById('challenge-title');
+        const challengeQuestion = document.getElementById('challenge-question');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackMessage = document.getElementById('feedback-message');
+
+        const endEmoji = document.getElementById('end-emoji');
+        const endTitle = document.getElementById('end-title');
+        const endDesc = document.getElementById('end-desc');
+
+        // --- Funções de Controle ---
+        function startGame() {
+            currentLevelIndex = 0;
+            playerHealth = 3;
+            feedbackActive = false;
+
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+
+            loadLevel();
+        }
+
+        function loadLevel() {
+            feedbackActive = false;
+            feedbackMessage.innerHTML = '';
+            
+            const level = LEVELS[currentLevelIndex];
+
+            // Atualiza indicadores e progresso
+            levelIndicator.textContent = `Nível ${currentLevelIndex + 1} / ${LEVELS.length}`;
+            renderHearts();
+
+            // Reseta inimigo visualmente
+            enemyCharacter.style.opacity = '1';
+            enemyCharacter.style.transform = 'scale(1)';
+            enemyEmoji.textContent = level.enemyEmoji;
+            enemyName.textContent = level.enemyName;
+
+            // Formata a explicação (substitui os acentos graves por tags code)
+            const formattedExplanation = formatExplanation(level.explanation);
+            tomeContent.innerHTML = formattedExplanation;
+
+            // Define perguntas
+            challengeTitle.textContent = `Desafio Ativo: ${level.title}`;
+            challengeQuestion.textContent = level.question;
+
+            // Renderiza Opções
+            optionsContainer.innerHTML = '';
+            level.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border-2 border-slate-600 bg-slate-900 hover:bg-slate-700 hover:border-slate-400 text-slate-300 font-mono text-sm md:text-base transition-all duration-300 flex items-center gap-4 cursor-pointer hover:-translate-y-0.5 active:translate-y-0";
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-600 flex items-center justify-center font-bold font-sans flex-shrink-0">
+                        ${['A', 'B', 'C', 'D'][index]}
+                    </span>
+                    <code>${escapeHTML(option)}</code>
+                `;
+                btn.onclick = () => selectOption(index);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            if (feedbackActive) return;
+            feedbackActive = true;
+
+            const level = LEVELS[currentLevelIndex];
+            const buttons = optionsContainer.querySelectorAll('button');
+
+            // Desativa todos os botões de opção
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === level.correctAnswer) {
+                // Sucesso
+                buttons[selectedIndex].className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-900/50 text-green-300 font-mono text-sm md:text-base flex items-center gap-4";
+                feedbackMessage.innerHTML = `<span class="text-green-400 animate-pulse">✓ Golpe Crítico! Bug destruído!</span>`;
+                
+                // Animação de dano no inimigo
+                damageOverlay.className = "absolute inset-0 bg-green-500/20 z-0 transition-none";
+                setTimeout(() => {
+                    damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0";
+                }, 100);
+
+                // Inimigo é derrotado e desaparece
+                setTimeout(() => {
+                    enemyCharacter.style.opacity = '0';
+                    enemyCharacter.style.transform = 'scale(0.5)';
+                }, 500);
+
+                // Avança de nível ou finaliza o jogo
+                setTimeout(() => {
+                    if (currentLevelIndex + 1 < LEVELS.length) {
+                        currentLevelIndex++;
+                        loadLevel();
+                    } else {
+                        endGame(true);
+                    }
+                }, 2000);
+
+            } else {
+                // Erro
+                buttons[selectedIndex].className = "w-full text-left p-4 rounded-xl border-2 border-slate-800 bg-slate-900 text-slate-600 opacity-50 font-mono text-sm md:text-base flex items-center gap-4";
+                buttons[level.correctAnswer].className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-900/50 text-green-300 font-mono text-sm md:text-base flex items-center gap-4";
+                
+                feedbackMessage.innerHTML = `<span class="text-red-400 animate-bounce">✗ Incorreto! O bug atacou as suas defesas!</span>`;
+                
+                playerHealth--;
+                renderHearts();
+
+                // Animação de abalo no jogador
+                playerCharacter.classList.add('animate-shake');
+                damageOverlay.className = "absolute inset-0 bg-red-500/20 z-0 transition-none";
+                setTimeout(() => {
+                    playerCharacter.classList.remove('animate-shake');
+                    damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0";
+                }, 500);
+
+                setTimeout(() => {
+                    if (playerHealth <= 0) {
+                        endGame(false);
+                    } else {
+                        // Deixa o jogador tentar novamente na mesma pergunta
+                        feedbackActive = false;
+                        feedbackMessage.innerHTML = '';
+                        buttons.forEach((btn, index) => {
+                            if (index !== selectedIndex && index !== level.correctAnswer) {
+                                btn.disabled = false;
+                            }
+                        });
+                    }
+                }, 1500);
+            }
+        }
+
+        function endGame(isVictory) {
+            gameScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+
+            if (isVictory) {
+                endEmoji.textContent = '🏆';
+                endTitle.textContent = 'Você Venceu!';
+                endTitle.className = "text-4xl font-extrabold text-green-400";
+                endDesc.textContent = 'Parabéns! Dominou perfeitamente as bases de Kotlin, derrotando com sucesso todo o legado do sistema!';
+            } else {
+                endEmoji.textContent = '💀';
+                endTitle.textContent = 'Game Over';
+                endTitle.className = "text-4xl font-extrabold text-red-500";
+                endDesc.textContent = 'O código legado e os NullPointerExceptions superaram você. Que tal revisar a teoria e tentar novamente?';
+            }
+        }
+
+        // --- Helpers de Renderização ---
+        function renderHearts() {
+            heartsContainer.innerHTML = '';
+            for (let i = 1; i <= 3; i++) {
+                const filled = i <= playerHealth;
+                heartsContainer.innerHTML += `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${filled ? '#ef4444' : 'none'}" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 transition-colors duration-300">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                `;
+            }
+        }
+
+        function formatExplanation(text) {
+            return text.split('`').map((part, index) => {
+                if (index % 2 !== 0) {
+                    return `<code class="bg-slate-900 text-orange-400 px-2 py-1 rounded font-mono text-sm border border-slate-700">${escapeHTML(part)}</code>`;
+                }
+                return part;
+            }).join('');
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
