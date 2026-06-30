@@ -134,7 +134,7 @@
                 </div>
                 <div class="flex items-center gap-2 text-xs text-rose-400 bg-rose-950/20 p-2.5 rounded-xl border border-rose-500/10">
                     <span>❤️</span>
-                    <span>Tens <strong>3 pontos de vida</strong>. Erros na teoria causarão ataques diretos ao teu HP!</span>
+                    <span>Tens <strong>5 pontos de vida</strong>. Erros na teoria causarão ataques diretos ao teu HP!</span>
                 </div>
             </div>
 
@@ -504,7 +504,7 @@
 
         // --- Estado do Jogo ---
         let currentLevelIndex = 0;
-        let playerHealth = 3;
+        let playerHealth = 5; // Atualizado para 5 vidas máximo
         let feedbackActive = false;
 
         // --- Elementos DOM ---
@@ -539,7 +539,7 @@
         // --- Funções de Controle ---
         function startGame() {
             currentLevelIndex = 0;
-            playerHealth = 3;
+            playerHealth = 5; // Resetado para 5 vidas ao iniciar
             feedbackActive = false;
 
             startScreen.classList.add('hidden');
@@ -741,10 +741,10 @@
         }
 
         function updateHpBars() {
-            const playerHpPercent = (playerHealth / 3) * 100;
+            const playerHpPercent = (playerHealth / 5) * 100; // Atualizado para calcular sobre 5 vidas
             playerHpBar.style.width = `${playerHpPercent}%`;
             
-            if (playerHealth === 1) {
+            if (playerHealth <= 2) { // Alerta visual ativado com 2 ou menos vidas restantes
                 playerHpBar.className = "bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 h-full w-full transition-all duration-500 rounded-full";
             } else {
                 playerHpBar.className = "bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 h-full w-full transition-all duration-500 rounded-full";
@@ -774,7 +774,7 @@
 
         function renderHearts() {
             heartsContainer.innerHTML = '';
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= 5; i++) { // Renderiza até 5 corações dinamicamente
                 const filled = i <= playerHealth;
                 heartsContainer.innerHTML += `
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${filled ? '#f43f5e' : 'none'}" stroke="${filled ? '#f43f5e' : '#475569'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 transition-all duration-300 ${filled ? 'drop-shadow-[0_0_6px_rgba(244,63,94,0.6)]' : ''}">
