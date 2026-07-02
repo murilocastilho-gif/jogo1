@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-        
+       
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
@@ -16,6 +16,7 @@
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
         }
+
 
         /* Efeitos Neon e Glassmorphism */
         .glass-panel {
@@ -28,6 +29,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
 
         /* Brilhos e Sombras Personalizados */
         .neon-glow-indigo {
@@ -43,6 +45,7 @@
             box-shadow: 0 0 25px -2px rgba(16, 185, 129, 0.35);
         }
 
+
         /* Animações avançadas */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -51,6 +54,7 @@
         .animate-float {
             animation: float 4s ease-in-out infinite;
         }
+
 
         @keyframes pulse-ring {
             0% { transform: scale(0.95); opacity: 0.5; }
@@ -61,6 +65,7 @@
             animation: pulse-ring 2s infinite ease-in-out;
         }
 
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-6px); }
@@ -69,6 +74,7 @@
         .animate-shake {
             animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
         }
+
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -92,11 +98,13 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-500/30 selection:text-purple-200 overflow-x-hidden">
 
+
     <!-- TELA INICIAL (Ecrã de Boas-vindas) -->
     <div id="start-screen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
         <!-- Detalhes de Background Futuristas -->
         <div class="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-amber-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
 
         <div class="max-w-2xl w-full text-center space-y-8 glass-panel-heavy p-8 md:p-12 rounded-3xl shadow-2xl relative z-10 border border-slate-700/30">
             <!-- Emblemas Decorativos -->
@@ -105,7 +113,7 @@
                     <span class="text-6xl block transform hover:rotate-12 transition-transform cursor-default" role="img" aria-label="java">☕</span>
                 </div>
             </div>
-            
+           
             <div class="space-y-3">
                 <span class="text-xs font-extrabold uppercase tracking-[0.25em] text-indigo-400 bg-indigo-500/10 px-4 py-1.5 rounded-full border border-indigo-500/20">
                     Edição Especial Teórica Java
@@ -117,6 +125,7 @@
                     Mergulhe na arquitetura de software! Prove que compreende os conceitos de forma fácil por trás do Java clássico em 12 níveis dinâmicos.
                 </p>
             </div>
+
 
             <!-- Painel de Regras Estilizado -->
             <div class="bg-slate-950/40 p-6 rounded-2xl text-left text-sm md:text-base text-slate-400 border border-slate-900 space-y-4 shadow-inner">
@@ -138,7 +147,8 @@
                 </div>
             </div>
 
-            <button 
+
+            <button
                 onclick="startGame()"
                 class="w-full py-4 text-lg font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 rounded-2xl transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-purple-500/25 border border-purple-400/20"
             >
@@ -146,6 +156,7 @@
             </button>
         </div>
     </div>
+
 
     <!-- TELA DE JOGO (Ecrã Principal) -->
     <div id="game-screen" class="hidden min-h-screen flex flex-col justify-between">
@@ -158,7 +169,7 @@
                     <!-- Gerado dinamicamente -->
                 </div>
             </div>
-            
+           
             <!-- Linha de Progresso Visual Segmentada -->
             <div class="flex items-center gap-2 bg-slate-950/40 p-2 rounded-2xl border border-slate-800/50">
                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2">Progresso:</span>
@@ -166,6 +177,7 @@
                     <!-- 12 nós inseridos via JS -->
                 </div>
             </div>
+
 
             <!-- Indicador do Nível Atual -->
             <div class="bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-2xl shadow-inner">
@@ -175,16 +187,17 @@
             </div>
         </header>
 
+
         <!-- Área Principal de Batalha -->
         <main class="flex-grow flex flex-col lg:flex-row p-4 md:p-8 gap-8 max-w-7xl mx-auto w-full items-stretch">
-            
+           
             <!-- Lado Esquerdo: Arena & Tomo do Conhecimento -->
             <div class="flex-1 flex flex-col gap-6 lg:max-w-[50%] justify-between">
-                
+               
                 <!-- Arena de Combate Visual -->
                 <div id="arena" class="bg-slate-900 rounded-3xl p-6 border border-slate-800/80 shadow-2xl flex flex-col justify-between relative overflow-hidden h-64 neon-glow-indigo transition-all duration-300">
                     <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    
+                   
                     <!-- Topo da Arena (Barras de Vida) -->
                     <div class="flex justify-between items-center w-full z-10">
                         <!-- Vida do Jogador -->
@@ -195,8 +208,10 @@
                             </div>
                         </div>
 
+
                         <!-- Status do Combate -->
                         <span id="combat-effect" class="text-xs font-black px-3 py-1 bg-slate-950 text-indigo-500 rounded-full border border-slate-800 animate-pulse">VS</span>
+
 
                         <!-- Vida do Inimigo -->
                         <div class="text-right space-y-1 bg-slate-950/30 p-2 rounded-xl border border-slate-800/30">
@@ -206,6 +221,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Corpo da Arena (Personagens) -->
                     <div class="flex justify-between items-center px-4 md:px-12 z-10 flex-grow mt-2 relative">
@@ -219,6 +235,7 @@
                             </div>
                         </div>
 
+
                         <!-- Avatar Inimigo -->
                         <div id="enemy-character" class="flex flex-col items-center transition-all duration-300 animate-float" style="animation-delay: 1.5s;">
                             <div class="relative">
@@ -230,29 +247,47 @@
                         </div>
                     </div>
 
+
                     <!-- Nome Completo do Inimigo no Rodapé da Arena -->
                     <div class="text-center w-full z-10 mt-2">
                         <span id="enemy-name" class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-slate-950/50 px-3 py-1 rounded-full border border-slate-800">Loading...</span>
                     </div>
 
+
                     <!-- Overlay para impacto visual de Dano/Sucesso -->
                     <div id="damage-overlay" class="absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-0"></div>
                 </div>
 
+
                 <!-- Painel de Explicação Teórica (Tomo) -->
-                <div class="bg-slate-900/50 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-800/80 shadow-2xl flex flex-col justify-between flex-grow mt-6 min-h-[220px]">
+                <div id="tome-panel" class="bg-slate-900/50 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-800/80 shadow-2xl flex flex-col justify-between flex-grow mt-6 min-h-[220px] transition-all duration-300">
                     <div>
-                        <h2 class="text-xl font-bold mb-4 text-indigo-400 flex items-center gap-2">
-                            <span class="p-2 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-300">📖</span>
-                            <span>O Tomo do Conhecimento</span>
-                        </h2>
-                        <!-- Scroll containment para explicações em ecrãs menores -->
-                        <div id="tome-content" class="text-sm md:text-base text-slate-300 leading-relaxed space-y-4 max-h-[160px] overflow-y-auto pr-2">
-                            <!-- Inserido dinamicamente via JS -->
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-indigo-400 flex items-center gap-2 select-none">
+                                <span class="p-2 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-300">📖</span>
+                                <span>O Tomo do Conhecimento</span>
+                            </h2>
+                            <!-- Botão Interativo de Ocultar/Mostrar Dica -->
+                            <button
+                                onclick="toggleTome()"
+                                id="toggle-tome-btn"
+                                class="px-3 py-1.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800/80 rounded-xl text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
+                            >
+                                <span id="toggle-tome-icon">👁️</span>
+                                <span id="toggle-tome-text">Ocultar Dica</span>
+                            </button>
+                        </div>
+                       
+                        <!-- Corpo da explicação com container colapsável -->
+                        <div id="tome-body" class="transition-all duration-300 max-h-[160px] opacity-100 overflow-hidden">
+                            <div id="tome-content" class="text-sm md:text-base text-slate-300 leading-relaxed space-y-4 max-h-[160px] overflow-y-auto pr-2">
+                                <!-- Inserido dinamicamente via JS -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Lado Direito: O Desafio (Quiz) -->
             <div class="flex-grow flex-1 flex flex-col">
@@ -272,10 +307,12 @@
                         </p>
                     </div>
 
+
                     <!-- Alternativas de Resposta -->
                     <div id="options-container" class="space-y-3.5 my-auto">
                         <!-- Botões inseridos dinamicamente -->
                     </div>
+
 
                     <!-- Mensagem de Feedback Inferior -->
                     <div id="feedback-message" class="mt-6 h-12 flex items-center justify-center text-sm md:text-base font-bold rounded-2xl transition-all">
@@ -284,8 +321,10 @@
                 </div>
             </div>
 
+
         </main>
     </div>
+
 
     <!-- TELA FINAL (Vitória ou Derrota) -->
     <div id="end-screen" class="hidden min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
@@ -302,7 +341,7 @@
                     Fantástico! Compreendeste perfeitamente todos os conceitos estruturais simplificados e as bases teóricas de Java.
                 </p>
             </div>
-            <button 
+            <button
                 onclick="startGame()"
                 class="w-full py-4 text-lg font-bold text-white bg-slate-800 hover:bg-slate-700 rounded-2xl transition-all border border-slate-700 shadow-md transform hover:scale-[1.01] active:scale-[0.99]"
             >
@@ -311,10 +350,12 @@
         </div>
     </div>
 
+
     <!-- Rodapé Minimalista -->
     <footer class="bg-slate-950 text-center py-4 text-[10px] text-slate-600 border-t border-slate-900">
         Jornada do Código © 2026 — Foco total em Arquitetura e Engenharia de Software.
     </footer>
+
 
     <!-- JAVASCRIPT: Lógica, Fluxo e Conteúdo do Jogo -->
     <script>
@@ -502,16 +543,19 @@
             }
         ];
 
+
         // --- Estado do Jogo ---
         let currentLevelIndex = 0;
         let playerHealth = 5; // Atualizado para 5 vidas máximo
         let feedbackActive = false;
+        let isTomeVisible = true; // Controla o estado de visibilidade da dica
+
 
         // --- Elementos DOM ---
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
         const endScreen = document.getElementById('end-screen');
-        
+       
         const heartsContainer = document.getElementById('hearts-container');
         const levelIndicator = document.getElementById('level-indicator');
         const timelineNodes = document.getElementById('timeline-nodes');
@@ -519,6 +563,10 @@
         const enemyHpBar = document.getElementById('enemy-hp-bar');
         const damageOverlay = document.getElementById('damage-overlay');
         const tomeContent = document.getElementById('tome-content');
+        const tomePanel = document.getElementById('tome-panel');
+        const tomeBody = document.getElementById('tome-body');
+        const toggleTomeIcon = document.getElementById('toggle-tome-icon');
+        const toggleTomeText = document.getElementById('toggle-tome-text');
         const arena = document.getElementById('arena');
         const playerCharacter = document.getElementById('player-character');
         const enemyCharacter = document.getElementById('enemy-character');
@@ -526,15 +574,17 @@
         const enemyName = document.getElementById('enemy-name');
         const enemyNameHud = document.getElementById('enemy-name-hud');
         const combatEffect = document.getElementById('combat-effect');
-        
+       
         const challengeTitle = document.getElementById('challenge-title');
         const challengeQuestion = document.getElementById('challenge-question');
         const optionsContainer = document.getElementById('options-container');
         const feedbackMessage = document.getElementById('feedback-message');
 
+
         const endEmoji = document.getElementById('end-emoji');
         const endTitle = document.getElementById('end-title');
         const endDesc = document.getElementById('end-desc');
+
 
         // --- Funções de Controle ---
         function startGame() {
@@ -542,12 +592,37 @@
             playerHealth = 5; // Resetado para 5 vidas ao iniciar
             feedbackActive = false;
 
+
             startScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
 
+
             loadLevel();
         }
+
+
+        // Função para Alternar a exibição da Dica (Tomo)
+        function toggleTome() {
+            isTomeVisible = !isTomeVisible;
+           
+            if (isTomeVisible) {
+                // Mostrar a Dica
+                tomeBody.classList.remove('max-h-0', 'opacity-0');
+                tomeBody.classList.add('max-h-[160px]', 'opacity-100', 'mt-4');
+                tomePanel.style.minHeight = "220px";
+                toggleTomeIcon.textContent = '👁️';
+                toggleTomeText.textContent = 'Ocultar Dica';
+            } else {
+                // Ocultar a Dica
+                tomeBody.classList.remove('max-h-[160px]', 'opacity-100', 'mt-4');
+                tomeBody.classList.add('max-h-0', 'opacity-0');
+                tomePanel.style.minHeight = "80px";
+                toggleTomeIcon.textContent = '👁️‍🗨️';
+                toggleTomeText.textContent = 'Mostrar Dica';
+            }
+        }
+
 
         // Gera e atualiza a timeline de nós indicativos
         function renderTimeline() {
@@ -557,9 +632,10 @@
                 const isCompleted = i < currentLevelIndex;
                 const isActive = i === currentLevelIndex;
 
+
                 // Classes base para o design do nó (foco total em estilo Java Indigo/Amber)
                 let nodeStyle = "w-3 h-3 md:w-4 md:h-4 rounded-full flex items-center justify-center text-[7px] md:text-[8px] font-bold transition-all duration-300 border ";
-                
+               
                 if (isCompleted) {
                     nodeStyle += "bg-emerald-500 border-emerald-400 text-slate-950 neon-glow-emerald";
                 } else if (isActive) {
@@ -568,10 +644,12 @@
                     nodeStyle += "bg-slate-950 border-slate-800 text-slate-600";
                 }
 
+
                 node.className = nodeStyle;
                 node.title = `${LEVELS[i].title}`;
                 node.textContent = i + 1;
                 timelineNodes.appendChild(node);
+
 
                 // Linha de ligação entre nós
                 if (i < LEVELS.length - 1) {
@@ -588,13 +666,15 @@
             }
         }
 
+
         function loadLevel() {
             feedbackActive = false;
             feedbackMessage.innerHTML = '';
             combatEffect.className = "text-xs font-black px-3 py-1 bg-slate-950 text-indigo-500 rounded-full border border-slate-800 animate-pulse";
             combatEffect.textContent = "VS";
-            
+           
             const level = LEVELS[currentLevelIndex];
+
 
             // Atualiza indicadores e progresso
             levelIndicator.textContent = `NÍVEL ${currentLevelIndex + 1} / ${LEVELS.length}`;
@@ -602,24 +682,28 @@
             updateHpBars();
             renderTimeline();
 
+
             // Reseta inimigo visualmente
             enemyCharacter.style.opacity = '1';
             enemyCharacter.style.transform = 'scale(1)';
-            
+           
             // Lógica de Renderização do Inimigo apenas com Emojis
             enemyEmoji.innerHTML = level.enemyEmoji;
             enemyEmoji.className = "text-5xl md:text-6xl bg-slate-950/90 p-4 rounded-3xl border border-rose-500/20 shadow-xl relative z-10 animate-bounce flex items-center justify-center";
-            
+           
             enemyName.textContent = `${level.enemyName} (${level.title.split(':')[0]})`;
             enemyNameHud.textContent = level.enemyName;
+
 
             // Formata a explicação (substitui os acentos graves por tags de destaque)
             const formattedExplanation = formatExplanation(level.explanation);
             tomeContent.innerHTML = formattedExplanation;
 
+
             // Define perguntas
             challengeTitle.textContent = `${level.title}`;
             challengeQuestion.textContent = level.question;
+
 
             // Renderiza Opções
             optionsContainer.innerHTML = '';
@@ -637,30 +721,37 @@
             });
         }
 
+
         function selectOption(selectedIndex) {
             if (feedbackActive) return;
             feedbackActive = true;
 
+
             const level = LEVELS[currentLevelIndex];
             const buttons = optionsContainer.querySelectorAll('button');
 
+
             // Desativa todos os botões temporariamente durante a validação
             buttons.forEach(btn => btn.disabled = true);
+
 
             if (selectedIndex === level.correctAnswer) {
                 // SUCESSO!
                 buttons[selectedIndex].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-950/30 text-emerald-300 text-xs md:text-sm flex items-start gap-4 transition-all duration-300 shadow-md shadow-emerald-500/10 neon-glow-emerald";
                 feedbackMessage.innerHTML = `<span class="text-emerald-400 animate-pulse flex items-center gap-2">✨ Raciocínio Impecável! Paradigma compreendido!</span>`;
-                
+               
                 // Mudar aura da arena para verde
                 arena.className = "bg-slate-900 rounded-3xl p-6 border border-emerald-500/30 shadow-2xl flex flex-col justify-between relative overflow-hidden h-64 neon-glow-emerald transition-all duration-300";
+
 
                 // Efeito visual de ataque
                 combatEffect.textContent = "💥";
                 combatEffect.className = "text-3xl font-black px-3 py-1 bg-emerald-950 text-emerald-300 rounded-full border border-emerald-500 animate-ping";
 
+
                 // Reduz HP do inimigo visualmente no HUD
                 enemyHpBar.style.width = "0%";
+
 
                 // Flash de impacto verde no overlay
                 damageOverlay.className = "absolute inset-0 bg-emerald-500/10 z-10 transition-none";
@@ -668,11 +759,13 @@
                     damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-10";
                 }, 150);
 
+
                 // Encolher inimigo antes da eliminação
                 setTimeout(() => {
                     enemyCharacter.style.opacity = '0';
                     enemyCharacter.style.transform = 'scale(0.5)';
                 }, 400);
+
 
                 // Avança nível
                 setTimeout(() => {
@@ -684,23 +777,27 @@
                     }
                 }, 2200);
 
+
             } else {
                 // ERRO!
                 buttons[selectedIndex].className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-950/20 text-rose-300 text-xs md:text-sm flex items-start gap-4 transition-all duration-300 cursor-not-allowed shadow-md shadow-rose-500/10 neon-glow-red";
                 buttons[selectedIndex].dataset.wrong = "true";
-                
+               
                 // Mudar aura da arena para vermelha
                 arena.className = "bg-slate-900 rounded-3xl p-6 border border-rose-500/30 shadow-2xl flex flex-col justify-between relative overflow-hidden h-64 neon-glow-red transition-all duration-300";
 
+
                 feedbackMessage.innerHTML = `<span class="text-rose-400 animate-bounce flex items-center gap-2">⚡ Falha Lógica! O conceito não se aplica desta forma!</span>`;
-                
+               
                 playerHealth--;
                 renderHearts();
                 updateHpBars();
 
+
                 // Efeito visual de ataque recebido
                 combatEffect.textContent = "❌";
                 combatEffect.className = "text-3xl font-black px-3 py-1 bg-rose-950 text-rose-300 rounded-full border border-rose-500 animate-pulse";
+
 
                 // Tremer jogador
                 playerCharacter.classList.add('animate-shake');
@@ -708,11 +805,13 @@
                     playerCharacter.classList.remove('animate-shake');
                 }, 500);
 
+
                 // Flash de impacto vermelho no overlay
                 damageOverlay.className = "absolute inset-0 bg-rose-500/20 z-10 transition-none";
                 setTimeout(() => {
                     damageOverlay.className = "absolute inset-0 bg-transparent transition-colors duration-300 pointer-events-none z-10";
                 }, 500);
+
 
                 setTimeout(() => {
                     if (playerHealth <= 0) {
@@ -727,9 +826,9 @@
                         feedbackMessage.innerHTML = '';
                         combatEffect.textContent = "VS";
                         combatEffect.className = "text-xs font-black px-3 py-1 bg-slate-950 text-indigo-500 rounded-full border border-slate-800 animate-pulse";
-                        
+                       
                         arena.className = "bg-slate-900 rounded-3xl p-6 border border-slate-800/80 shadow-2xl flex flex-col justify-between relative overflow-hidden h-64 neon-glow-indigo transition-all duration-300";
-                        
+                       
                         buttons.forEach((btn) => {
                             if (btn.dataset.wrong !== "true") {
                                 btn.disabled = false;
@@ -740,22 +839,26 @@
             }
         }
 
+
         function updateHpBars() {
-            const playerHpPercent = (playerHealth / 5) * 100; // Atualizado para calcular sobre 5 vidas
+            const playerHpPercent = (playerHealth / 5) * 100; // Calculado sobre 5 vidas
             playerHpBar.style.width = `${playerHpPercent}%`;
-            
+           
             if (playerHealth <= 2) { // Alerta visual ativado com 2 ou menos vidas restantes
                 playerHpBar.className = "bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 h-full w-full transition-all duration-500 rounded-full";
             } else {
                 playerHpBar.className = "bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 h-full w-full transition-all duration-500 rounded-full";
             }
 
+
             enemyHpBar.style.width = "100%";
         }
+
 
         function endGame(isVictory) {
             gameScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
+
 
             if (isVictory) {
                 endScreen.className = "min-h-screen flex items-center justify-center p-4 relative overflow-hidden neon-glow-purple";
@@ -772,6 +875,7 @@
             }
         }
 
+
         function renderHearts() {
             heartsContainer.innerHTML = '';
             for (let i = 1; i <= 5; i++) { // Renderiza até 5 corações dinamicamente
@@ -784,6 +888,7 @@
             }
         }
 
+
         function formatExplanation(text) {
             return text.split('`').map((part, index) => {
                 if (index % 2 !== 0) {
@@ -793,9 +898,13 @@
             }).join('');
         }
 
+
         function escapeHTML(str) {
             return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
 </body>
 </html>
+
+
+
